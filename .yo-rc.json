@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "16.17.0",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.4.1"
+    },
+    "version": "1.16.0",
+    "libraryName": "ui-table-spfx",
+    "libraryId": "83a6b458-0ae6-4aeb-99a4-c6f5277dc59b",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "ui-table-spfx",
+    "solutionShortDescription": "ui-table-spfx description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

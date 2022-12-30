@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "ui-table-spfx-client-side-solution",
+    "id": "83a6b458-0ae6-4aeb-99a4-c6f5277dc59b",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.16.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "ui-table-spfx description"
+      },
+      "longDescription": {
+        "default": "ui-table-spfx description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "ui-table-spfx Feature",
+        "description": "The feature that activates elements of the ui-table-spfx solution.",
+        "id": "6eed2201-5387-48df-b280-db3c6fa8787c",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/ui-table-spfx.sppkg"
+  }
+}
