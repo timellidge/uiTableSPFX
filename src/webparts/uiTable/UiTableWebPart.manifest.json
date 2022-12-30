@@ -22,7 +22,7 @@
     "description": { "default": "uiTable description" },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "uiTable"
+      "listName": "DemoList"
     }
   }]
 }

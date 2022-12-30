@@ -13,7 +13,7 @@ import UiTableApp from './components/UiTableApp';
 import { IUiTableProps } from './components/IUiTableProps';
 
 export interface IUiTableWebPartProps {
-  description: string;
+  listName: string;
 }
 
 export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPartProps> {
@@ -25,7 +25,8 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
     const element: React.ReactElement<IUiTableProps> = React.createElement(
       UiTableApp,
       {
-        description: this.properties.description,
+        listName: this.properties.listName,
+        ctx: this.context,
         isDarkTheme: this._isDarkTheme,
         environmentMessage: this._environmentMessage,
         hasTeamsContext: !!this.context.sdks.microsoftTeams,
@@ -107,8 +108,8 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('listName', {
+                  label: "Source List"
                 })
               ]
             }

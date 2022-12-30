@@ -1,5 +1,8 @@
+import { WebPartContext } from "@microsoft/sp-webpart-base";
+
 export interface IUiTableProps {
-  description: string;
+  listName: string;
+  ctx:WebPartContext;
   isDarkTheme: boolean;
   environmentMessage: string;
   hasTeamsContext: boolean;
