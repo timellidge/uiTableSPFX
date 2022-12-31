@@ -14,6 +14,7 @@ import { IUiTableProps } from './components/IUiTableProps';
 
 export interface IUiTableWebPartProps {
   listName: string;
+  tableLayout: string
 }
 
 export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPartProps> {
@@ -110,6 +111,9 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
               groupFields: [
                 PropertyPaneTextField('listName', {
                   label: "Source List"
+                }),
+                PropertyPaneTextField('tableLayout', {
+                  label: "Layout", multiline: true
                 })
               ]
             }
