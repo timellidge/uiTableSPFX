@@ -43,12 +43,10 @@ export default class UiTableApp extends React.Component<IUiTableProps, any> {
     public render(): React.ReactElement<IUiTableProps> {
         return (
             <section className={`${styles.uiTable} `}>
-                <h2>Hi about to go deeper </h2>
+                <h2>Top Level Component</h2>
                 <div className={styles.welcome}>
-                    <UiTable />
+                   {this.state.items.map(item => <UiTable row = {item} />)}
                 </div>
-                <h1>LIST 1 DATA</h1>
-                <div>{JSON.stringify(this.state.items)}</div>
                 <h1>LIST 2 DATA</h1>
                 <div>{JSON.stringify(this.state.moreitems)}</div>
             </section>
