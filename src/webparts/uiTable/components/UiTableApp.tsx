@@ -2,7 +2,8 @@ import * as React from 'react';
 import styles from './UiTable.module.scss';
 import { IUiTableProps } from './IUiTableProps';
 import UiTable from './UiTable'
-import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http'
+import * as Utils from "../../uiTable/utils";
+import { SPHttpClient } from '@microsoft/sp-http'
 
 export default class UiTableApp extends React.Component<IUiTableProps, any> {
 
@@ -12,27 +13,22 @@ export default class UiTableApp extends React.Component<IUiTableProps, any> {
     };
 
     private _client: SPHttpClient = this.props.ctx.spHttpClient;
+    private _webUrl: string = this.props.ctx.pageContext.web.absoluteUrl;
 
     private _getTableData() {
-        let url = "https://justsharepoint.sharepoint.com/sites/JSPProjects/_api/web/lists/GetByTitle('DemoList')/items";
-        this._getSPData(this._client, url).then(d => {
-            let data = d.value;
+        const url = this._webUrl+ "/_api/web/lists/GetByTitle('DemoList')/items";
+        Utils.getSPData(this._client, url).then(d => {
+            const data = d.value;
             this.setState({ items: data });
         });
     }
 
     private _getTableData2() {
-        let url = "https://justsharepoint.sharepoint.com/sites/JSPProjects/_api/web/lists/GetByTitle('Notifications')/items";
-        this._getSPData(this._client, url).then(d => {
-            let data = d.value;
+        const url = this._webUrl+ "/_api/web/lists/GetByTitle('Notifications')/items";
+        Utils.getSPData(this._client, url).then(d => {
+            const data = d.value;
             this.setState({ moreitems: data });
         });
-    }
-
-    private async _getSPData(client: SPHttpClient, url: string): Promise<any> {
-        let response: SPHttpClientResponse = await client.get(url, SPHttpClient.configurations.v1)
-        let responsejson = response.json();
-        return responsejson;
     }
 
     componentDidMount() {
@@ -53,3 +49,4 @@ export default class UiTableApp extends React.Component<IUiTableProps, any> {
         );
     }
 }
+  
