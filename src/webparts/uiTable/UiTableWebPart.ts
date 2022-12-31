@@ -11,8 +11,15 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import * as strings from 'UiTableWebPartStrings';
 import UiTableApp from './components/UiTableApp';
 import { IUiTableProps } from './components/IUiTableProps';
+import { PropertyFieldCodeEditor, PropertyFieldCodeEditorLanguages } from '@pnp/spfx-property-controls/lib/PropertyFieldCodeEditor';
 
 export interface IUiTableWebPartProps {
+  webPartTag: any;
+  siteUrl: any;
+  list: any;
+  view: any;
+  viewXmlCode: any;
+  JSONCode: string;
   listName: string;
   tableLayout: string
 }
@@ -21,30 +28,12 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
 
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
-
-  public render(): void {
-    const element: React.ReactElement<IUiTableProps> = React.createElement(
-      UiTableApp,
-      {
-        listName: this.properties.listName,
-        ctx: this.context,
-        isDarkTheme: this._isDarkTheme,
-        environmentMessage: this._environmentMessage,
-        hasTeamsContext: !!this.context.sdks.microsoftTeams,
-        userDisplayName: this.context.pageContext.user.displayName
-      }
-    );
-
-    ReactDom.render(element, this.domElement);
-  }
-
+  
   protected onInit(): Promise<void> {
     return this._getEnvironmentMessage().then(message => {
       this._environmentMessage = message;
     });
   }
-
-
 
   private _getEnvironmentMessage(): Promise<string> {
     if (!!this.context.sdks.microsoftTeams) { // running in Teams, office.com or Outlook
@@ -107,13 +96,30 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
           },
           groups: [
             {
-              groupName: strings.BasicGroupName,
+              groupName: "Table Configuration",
               groupFields: [
+                PropertyPaneTextField('webPartTag', {
+                  label: 'Web Part CSS Tag',
+                  value: this.properties.webPartTag,
+                }),
                 PropertyPaneTextField('listName', {
                   label: "Source List"
                 }),
-                PropertyPaneTextField('tableLayout', {
-                  label: "Layout", multiline: true
+                PropertyFieldCodeEditor('JSONCode', {
+                  label: 'JSON Table Layout',
+                  panelTitle: 'JSON Table Layout',
+                  initialValue: this.properties.JSONCode,
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  properties: this.properties,
+                  disabled: false,
+                  key: 'codeEditorFieldId',
+                  language: PropertyFieldCodeEditorLanguages.JSON,
+                  options: {
+                    wrap: true,
+                    fontSize: 18,
+                    // more options
+                  },
+                  panelWidth: "700"
                 })
               ]
             }
@@ -121,5 +127,21 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
         }
       ]
     };
+  }
+
+  public render(): void {
+    const element: React.ReactElement<IUiTableProps> = React.createElement(
+      UiTableApp,
+      {
+        listName: this.properties.listName,
+        ctx: this.context,
+        isDarkTheme: this._isDarkTheme,
+        environmentMessage: this._environmentMessage,
+        hasTeamsContext: !!this.context.sdks.microsoftTeams,
+        userDisplayName: this.context.pageContext.user.displayName
+      }
+    );
+
+    ReactDom.render(element, this.domElement);
   }
 }
