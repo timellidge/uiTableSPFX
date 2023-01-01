@@ -63,7 +63,6 @@ export default class UiTableApp extends React.Component<IUiTableProps, any> {
           }
         }
       
-
     private _getTableData() {
         const url = this._webUrl+ "/_api/web/lists/GetByTitle('DemoList')/items";
         Utils.getSPData(this._client, url).then(d => {
