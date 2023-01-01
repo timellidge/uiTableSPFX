@@ -177,7 +177,7 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
   }
 
   public render(): void {
-    this.properties.JSONCode = JSON.stringify(this._hlayout);
+    //this.properties.JSONCode = JSON.stringify(this._hlayout);
     const element: React.ReactElement<IUiTableProps> = React.createElement(
       UiTableApp,
       {
@@ -187,7 +187,7 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
         environmentMessage: this._environmentMessage,
         hasTeamsContext: !!this.context.sdks.microsoftTeams,
         userDisplayName: this.context.pageContext.user.displayName,
-        JSONCode: this.properties.JSONCode
+        JSONCode: JSON.stringify(this._hlayout)
       }
     );
 
