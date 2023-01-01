@@ -11,7 +11,9 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import * as strings from 'UiTableWebPartStrings';
 import UiTableApp from './components/UiTableApp';
 import { IUiTableProps } from './components/IUiTableProps';
-import { PropertyFieldCodeEditor, PropertyFieldCodeEditorLanguages } from '@pnp/spfx-property-controls/lib/PropertyFieldCodeEditor';
+import { PropertyFieldCodeEditor, PropertyFieldCodeEditorLanguages,  } from '@pnp/spfx-property-controls/lib/PropertyFieldCodeEditor';
+
+import { PropertyFieldListPicker, PropertyFieldListPickerOrderBy } from '@pnp/spfx-property-controls/lib/PropertyFieldListPicker';
 
 export interface IUiTableWebPartProps {
   webPartTag: any;
@@ -132,6 +134,23 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
     return Version.parse('1.0');
   }
 
+   private onPropertyFieldListPickerChanged(
+    targetProperty: string,
+    oldValue: unknown,
+    newValue: unknown,
+  ) {
+    const oldViewValue = this.properties[targetProperty];
+    this.onPropertyPaneFieldChanged(targetProperty, oldViewValue, newValue);
+    if (newValue !== '') {
+      //getListFields(this.properties.siteUrl, this.properties.list)
+      //
+      //  .then(this.updateFieldListPickerOptions.bind(this));
+    } else {
+      this.context.propertyPane.refresh();
+      this.render();
+    }
+  }
+
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
 
     return {
@@ -148,9 +167,20 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
                   label: 'Web Part CSS Tag',
                   value: this.properties.webPartTag,
                 }),
-                PropertyPaneTextField('listName', {
-                  label: "Source List"
+                PropertyFieldListPicker('lists', {
+                  label: 'Select a list',
+                  selectedList: this.properties.list,
+                  includeHidden: false,
+                  orderBy: PropertyFieldListPickerOrderBy.Title,
+                  disabled: false,
+                  onPropertyChange: this.onPropertyFieldListPickerChanged.bind(this),
+                  properties: this.properties,
+                  context: this.context,
+                  onGetErrorMessage: null,
+                  deferredValidationTime: 0,
+                  key: 'listPickerFieldId'
                 }),
+
                 PropertyFieldCodeEditor('JSONCode', {
                   label: 'JSON Table Layout',
                   panelTitle: 'JSON Table Layout',
