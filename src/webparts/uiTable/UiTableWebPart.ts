@@ -28,13 +28,52 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
 
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
-  
-  protected onInit(): Promise<void> {
-    return this._getEnvironmentMessage().then(message => {
-      this._environmentMessage = message;
-    });
-  }
 
+  private _hlayout = 
+  {
+    "_wfAction": {
+      "name": "Action",
+      "width": "20",
+      "class": "featuredcell"
+    },
+    "_wfUser": {
+      "name": "User",
+      "width": "0"
+    },
+    "_wfTime": {
+      "name": "Date (Time)",
+      "width": "15",
+      "type": "date",
+      "format": "DD MMM YY (HH:mm)"
+    },
+    "progress": {
+      "name": "% time at stage",
+      "width": "9"
+    },
+    "_wfStreamTime0": {
+      "name": "Days",
+      "width": "5",
+      "type": "number",
+      "format": " 2"
+    },
+    "_wfStageChange": {
+      "name": "New stage",
+      "width": "0"
+    },
+    "_wfStreamStatus": {
+      "name": "Stage",
+      "width": "0"
+    },
+    "_wfPrevStage": {
+      "name": "From",
+      "width": "0"
+    },
+    "_wfLogComment": {
+      "name": "Comment",
+      "width": "35"
+    }
+  }
+  
   private _getEnvironmentMessage(): Promise<string> {
     if (!!this.context.sdks.microsoftTeams) { // running in Teams, office.com or Outlook
       return this.context.sdks.microsoftTeams.teamsJs.app.getContext()
@@ -59,6 +98,12 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
     }
 
     return Promise.resolve(this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentSharePoint : strings.AppSharePointEnvironment);
+  }
+
+  protected onInit(): Promise<void> {
+    return this._getEnvironmentMessage().then(message => {
+      this._environmentMessage = message;
+    });
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
@@ -88,6 +133,7 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
+
     return {
       pages: [
         {
@@ -111,15 +157,16 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
                   initialValue: this.properties.JSONCode,
                   onPropertyChange: this.onPropertyPaneFieldChanged,
                   properties: this.properties,
+                
                   disabled: false,
                   key: 'codeEditorFieldId',
                   language: PropertyFieldCodeEditorLanguages.JSON,
                   options: {
                     wrap: true,
-                    fontSize: 18,
+                    fontSize: 18
                     // more options
                   },
-                  panelWidth: "700"
+                  panelWidth: "600"
                 })
               ]
             }
@@ -130,6 +177,7 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
   }
 
   public render(): void {
+    this.properties.JSONCode = JSON.stringify(this._hlayout);
     const element: React.ReactElement<IUiTableProps> = React.createElement(
       UiTableApp,
       {
