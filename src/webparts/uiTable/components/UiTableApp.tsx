@@ -36,7 +36,7 @@ export default class UiTableApp extends React.Component<IUiTableProps, any> {
         });
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         this._getTableData();
         this._getTableData2();
         if(this.props.JSONCode.length === 0){console.log("no jsomn");} else {console.log("code is", this.props.JSONCode.length);}

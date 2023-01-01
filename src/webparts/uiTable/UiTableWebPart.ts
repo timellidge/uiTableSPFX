@@ -160,13 +160,13 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
                 
                   disabled: false,
                   key: 'codeEditorFieldId',
-                  language: PropertyFieldCodeEditorLanguages.JSON,
+                  language: PropertyFieldCodeEditorLanguages.JavaScript,
                   options: {
                     wrap: true,
                     fontSize: 18
                     // more options
                   },
-                  panelWidth: "600"
+                  panelWidth: "300"
                 })
               ]
             }
