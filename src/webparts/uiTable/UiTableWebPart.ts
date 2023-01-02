@@ -12,13 +12,12 @@ import * as strings from 'UiTableWebPartStrings';
 import UiTableApp from './components/UiTableApp';
 import { IUiTableProps } from './components/IUiTableProps';
 import { PropertyFieldCodeEditor, PropertyFieldCodeEditorLanguages,  } from '@pnp/spfx-property-controls/lib/PropertyFieldCodeEditor';
-
 import { PropertyFieldListPicker, PropertyFieldListPickerOrderBy } from '@pnp/spfx-property-controls/lib/PropertyFieldListPicker';
 
 export interface IUiTableWebPartProps {
   webPartTag: any;
   siteUrl: any;
-  list: any;
+  list: string;
   view: any;
   viewXmlCode: any;
   JSONCode: string;
@@ -94,7 +93,6 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
             default:
               throw new Error('Unknown host');
           }
-
           return environmentMessage;
         });
     }
@@ -167,7 +165,7 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
                   label: 'Web Part CSS Tag',
                   value: this.properties.webPartTag,
                 }),
-                PropertyFieldListPicker('lists', {
+                PropertyFieldListPicker('list', {
                   label: 'Select a list',
                   selectedList: this.properties.list,
                   includeHidden: false,
@@ -185,9 +183,8 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
                   label: 'JSON Table Layout',
                   panelTitle: 'JSON Table Layout',
                   initialValue: this.properties.JSONCode,
-                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  onPropertyChange: this.onPropertyPaneFieldChanged.bind(this),
                   properties: this.properties,
-                
                   disabled: false,
                   key: 'codeEditorFieldId',
                   language: PropertyFieldCodeEditorLanguages.JavaScript,
@@ -196,7 +193,7 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
                     fontSize: 18
                     // more options
                   },
-                  panelWidth: "300"
+                  panelWidth: "50"
                 })
               ]
             }
@@ -217,7 +214,8 @@ export default class UiTableWebPart extends BaseClientSideWebPart<IUiTableWebPar
         environmentMessage: this._environmentMessage,
         hasTeamsContext: !!this.context.sdks.microsoftTeams,
         userDisplayName: this.context.pageContext.user.displayName,
-        JSONCode: JSON.stringify(this._hlayout)
+        JSONCode: JSON.stringify(this._hlayout),
+        list: this.properties.list
       }
     );
 

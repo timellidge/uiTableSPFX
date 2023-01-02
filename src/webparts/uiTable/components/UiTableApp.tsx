@@ -29,20 +29,27 @@ export default class UiTableApp extends React.Component<IUiTableProps, any> {
     }
 
     private _getTableData2() {
-        const url = this._webUrl+ "/_api/web/lists/GetByTitle('Notifications')/items";
-        Utils.getSPData(this._client, url).then(d => {
-            const data = d.value;
-            this.setState({ moreitems: data });
-        });
+        if (this.props.list != undefined){
+            const url = this._webUrl+ "/_api/web/lists/GetById('"+this.props.list+"')/items";
+            Utils.getSPData(this._client, url).then(d => {
+                const data = d.value;
+                console.log("list query",JSON.stringify(d.value));
+                this.setState({ moreitems: data });
+            });
+        }
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this._getTableData();
         this._getTableData2();
         if(this.props.JSONCode.length === 0){console.log("no jsomn");} else {console.log("code is", this.props.JSONCode.length);}
         //console.log("layout." , this._hlayout);
         console.log("layoutproperty" , this._tableLayout);
     }
+
+    //public componentDidUpdate(): void {
+     //   this._getTableData2();
+    //}
 
     public render(): React.ReactElement<IUiTableProps> {
         return (
