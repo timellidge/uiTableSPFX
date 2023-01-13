@@ -7,4 +7,6 @@ export interface IUiTableProps {
   environmentMessage: string;
   hasTeamsContext: boolean;
   userDisplayName: string;
+  JSONCode: string;
+  list:string;
 }

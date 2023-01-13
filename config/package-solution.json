@@ -3,7 +3,7 @@
   "solution": {
     "name": "ui-table-spfx-client-side-solution",
     "id": "83a6b458-0ae6-4aeb-99a4-c6f5277dc59b",
-    "version": "1.0.0.0",
+    "version": "1.0.1.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,

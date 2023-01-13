@@ -13,6 +13,7 @@
   },
   "externals": {},
   "localizedResources": {
-    "UiTableWebPartStrings": "lib/webparts/uiTable/loc/{locale}.js"
+    "UiTableWebPartStrings": "lib/webparts/uiTable/loc/{locale}.js",
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js"
   }
 }
